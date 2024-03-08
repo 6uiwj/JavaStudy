@@ -162,8 +162,175 @@ public class Ex01 {
 100일 후 날짜 : 2024-6-16 17:25:13
 100일 전 날짜 : 2024-3-8 17:25:13
 ```
+---------------------------------------
+### 1-2. java.time.LocalDate
 
+1. 현재날짜 출력, 날짜 지정하기
+
+   
+```java
+
+public class Ex02 {
+    public static void main(String[] args) {
+        LocalDate date1 = LocalDate.now(); //현재시간 출력
+        System.out.println(date1);
+
+        //지정된 시간 출력
+        LocalDate date2 = LocalDate.of(2022,10,4);
+        System.out.println(date2);
+
+    }
+}
+
+```
+```
+2024-03-08
+2022-10-04
+```
+
+2. 현재날짜 혹은 특정 날짜의 년/월/일 출력하기
+
+```java
+public class Ex03 {
+    public static void main(String[] args) {
+
+        LocalDate date1 = LocalDate.now();
+        
+        int year = date1.getYear();
+        int month = date1.getMonthValue();
+        int date = date1.getDayOfMonth();
+
+        System.out.printf("year=%d, month=%d, date=%d%n", year,month,date);
+    }
+}
+
+```
+```
+year=2024, month=3, date=8
+```
+  
 <hr>
+
+3. 요일 관련 메서드
+```java
+
+public class Ex04 {
+    public static void main(String[] args) {
+        
+        LocalDate date1 = LocalDate.now();
+        DayOfWeek dayOfWeek = date1.getDayOfWeek();
+        System.out.println("현재 요일 반환 : " + dayOfWeek);
+
+        int yoil = dayOfWeek.getValue();
+        System.out.println("현재 요일을 숫자로 반환 : " + yoil);
+
+        //요일을 문자 길이별로 한글로 출력
+        String yoilStr1 = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN);
+        String yoilStr2 = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN);
+        String yoilStr3 = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.KOREAN);
+
+        System.out.printf("SHORT=%s, NARROW=%s, FULL=%s%n", yoilStr1, yoilStr2, yoilStr3);
+
+        //요일을 문자 길이별로 영어로 출력
+        String yoilStr4 = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+        String yoilStr5 = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.ENGLISH);
+        String yoilStr6 = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
+        System.out.printf("SHORT=%s, NARROW=%s, FULL=%s%n", yoilStr4, yoilStr5, yoilStr6);
+    }
+}
+
+   ```
+```
+현재 요일 반환 : FRIDAY
+현재 요일을 숫자로 반환 : 5
+SHORT=금, NARROW=금, FULL=금요일
+SHORT=Fri, NARROW=F, FULL=Friday
+```
+
+4. 날짜 변경 관련 메서드
+
+```java
+
+public class Ex05 {
+    public static void main(String[] args) {
+
+        LocalDate date1 = LocalDate.now();
+
+        //현재 날짜를 지정하는 값으로 변경
+        LocalDate date2 = date1.withYear(2020);
+        LocalDate date3 = date1.withMonth(12);
+        LocalDate date4 = date1.withDayOfMonth(17);
+
+        System.out.println("현재 날짜 : " + date1);
+        System.out.println("연도 변경 날짜 : " + date2);
+        System.out.println("월 변경 날짜 : " + date3);
+        System.out.println("일 변경 날짜 : " + date4);
+
+
+
+    }
+}
+
+```
+```
+현재 날짜 : 2024-03-08
+연도 변경 날짜 : 2020-03-08
+월 변경 날짜 : 2024-12-08
+일 변경 날짜 : 2024-03-17
+```
+5. 날짜 더하고 빼기
+
+```java
+
+public class Ex06 {
+    public static void main(String[] args) {
+
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = date1.plusDays(100);
+        LocalDate date3 = date2.minusMonths(30);
+
+        System.out.println(date1);
+        System.out.printf("100일 후 : %s%n", date2);
+        System.out.printf("30개월 전 : %s",date3);
+    }
+}
+```
+```
+2024-03-08
+100일 후 : 2024-06-16
+30개월 전 : 2021-12-16
+```
+
+6. 날짜 비교
+
+```java
+
+public class Ex07 {
+    public static void main(String[] args) {
+
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = date1.plusWeeks(1);
+        System.out.println("현재 날짜 : " + date1);
+        System.out.println("상대 날짜 : " + date2);
+
+        // <날짜비교> date2가 date1보다 뒤의 날짜인가?
+        boolean comp = date2.isAfter(date1);
+        System.out.println("date2가 date1 보다 뒤의 날짜인가? " + comp);
+
+        // <날짜 차이 계산> date2-date1= ?
+        int diff = date2.compareTo(date1);
+        System.out.println("둘 사이의 날짜 차이는? " + diff);
+    }
+}
+```
+```
+현재 날짜 : 2024-03-08
+상대 날짜 : 2024-03-15
+date2가 date1 보다 뒤의 날짜인가? true
+둘 사이의 날짜 차이는? 7
+```
+
 
 ## 2.String
 
