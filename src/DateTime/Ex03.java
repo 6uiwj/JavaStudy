@@ -11,8 +11,8 @@ public class Ex03 {
         int year = date1.get(ChronoField.YEAR);
         int month = date1.get(ChronoField.MONTH_OF_YEAR);
         int date = date1.get(ChronoField.DAY_OF_MONTH);
-
          */
+
         //int year = date1.get(YEAR);
         int year = date1.getYear();
         //int month = date1.get(MONTH_OF_YEAR);
