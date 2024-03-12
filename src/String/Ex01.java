@@ -27,6 +27,10 @@ public class Ex01 {
         boolean endsWith = str.endsWith("세요");
         System.out.println(endsWith); //true
 
+        //startsWith(String prefix): 특정 문자(열)로 시작하는지 확인
+        boolean startsWith = str.startsWith("안녕");
+        System.out.println("startsWith: " + startsWith);
+
         //equals(String str) : 특정 문자를 포함하는지
         boolean equals = str.equals(str2);
         System.out.println(equals); //false

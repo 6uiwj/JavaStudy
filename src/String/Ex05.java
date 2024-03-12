@@ -19,5 +19,17 @@ public class Ex05 {
             System.out.println(temp);
         }
 
+        //subSequence(int a, int b): [a,b)까지 일부문자열 출력
+       String subS = str.substring(1,3);
+        System.out.println(subS);
+
+        String subS2 = str.substring(2);
+        System.out.println(subS2);
+
+        //toCharArray() : 주어진 문자열을 글자배열로 반환
+        char[] toChar = str.toCharArray();
+        System.out.println("toCharArray : " + toChar);
+
+
     }
 }
