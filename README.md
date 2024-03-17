@@ -334,3 +334,37 @@ date2가 date1 보다 뒤의 날짜인가? true
 
 ## 2.String
 
+> 주요 메서드들
+
+|메서드|반환값|설명|
+|:----|:---:|:---:|
+|charAt(int n)|
+|concat(String str)|
+|contains(String str)|
+|endsWith(String suffix)|
+|startsWith(String prefix)|
+|equals(String str)|
+|indexOf(String str)|
+|indexOf(String str, int fromIndex)|
+|lastIndexOf(String str)|
+|lastIndexOf(String str, int fromIndex)|
+|format(String format, object... args)|
+|hashCode()|
+|isBlank()|
+|isEmpty()|
+|length()|
+|lines()|
+|match(String str)|
+|repeat(int n)|
+|replace(char a, char b)|
+|replaceFirst(String a, String b)|
+|replaceAll(String "정규식", String "대체문자열")|
+|split(String a)|
+|split(String a(분할기준), String b(최대 분할 수))|
+|subSequence(int a, int b)|
+|toCharArray()|
+|toLowerCase()|
+|toUpperCase()|
+|String.valueOf(A)|
+|strip()|
+|trim()|
