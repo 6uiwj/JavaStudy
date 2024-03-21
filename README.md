@@ -339,8 +339,8 @@ date2가 date1 보다 뒤의 날짜인가? true
 |메서드|반환값|설명|
 |:----|:---:|:---:|
 |charAt(int n)||n번째 문자 반환|
-|concat(String str)|
-|contains(String str)|
+|concat(String str)||두 문자열 연결|
+|contains(String str)|||
 |endsWith(String suffix)|
 |startsWith(String prefix)|
 |equals(String str)|
