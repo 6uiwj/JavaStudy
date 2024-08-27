@@ -30,6 +30,11 @@ public class Customer implements Comparable<Customer> {
         return "[Name : " + name + ", Age : " + age + "]";
     }
 
+    /**
+     * 비교를 위한 메서드
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if ( this == o) return true;

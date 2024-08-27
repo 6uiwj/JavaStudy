@@ -1,6 +1,7 @@
 package stream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StreamAssist {
@@ -20,6 +21,7 @@ public class StreamAssist {
         //조건 3. 결과를 customer 객체가 아닌 문자열 데이터로 추출
 
         //기존 방법
+        //조건 1
         List<Customer> list = new ArrayList<>();
         for (Customer customer : customers) {
             if(customer.getAge() > 30) {
@@ -27,6 +29,18 @@ public class StreamAssist {
             }
         } //age 30> 추출
 
+        //조건 2
+        Collections.sort(list); //age에 대한 오름차순 정렬
 
+        //조건 3
+        List<String> results = new ArrayList<>();
+        for(Customer customer : list ) {
+            results.add(customer.getName());
+        }
+
+        //결과 출력
+        for(String name : results) {
+            System.out.println(name);
+        }
     }
 }
