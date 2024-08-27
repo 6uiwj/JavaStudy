@@ -121,7 +121,7 @@ calendar.set(2024,5,15) 결과값 : Sat Jun 15 17:43:37 KST 2024
 ### - add()
 현재 날짜 혹은 지정된 날짜에서 특정 일수를 더하거나 뺄 수 있다.
 
-  
+
 ```java
  package DateTime;
 
@@ -167,7 +167,7 @@ public class Ex01 {
 
 1. 현재날짜 출력, 날짜 지정하기
 
-   
+
 ```java
 
 public class Ex02 {
@@ -195,7 +195,7 @@ public class Ex03 {
     public static void main(String[] args) {
 
         LocalDate date1 = LocalDate.now();
-        
+
         int year = date1.getYear();
         int month = date1.getMonthValue();
         int date = date1.getDayOfMonth();
@@ -208,7 +208,7 @@ public class Ex03 {
 ```
 year=2024, month=3, date=8
 ```
-  
+
 <hr>
 
 3. 요일 관련 메서드
@@ -216,7 +216,7 @@ year=2024, month=3, date=8
 
 public class Ex04 {
     public static void main(String[] args) {
-        
+
         LocalDate date1 = LocalDate.now();
         DayOfWeek dayOfWeek = date1.getDayOfWeek();
         System.out.println("현재 요일 반환 : " + dayOfWeek);
@@ -338,9 +338,9 @@ date2가 date1 보다 뒤의 날짜인가? true
 
 |메서드|반환값|설명|
 |:----|:---:|:---:|
-|charAt(int n)|
-|concat(String str)|
-|contains(String str)|
+|charAt(int n)||n번째 문자 반환|
+|concat(String str)||두 문자열 연결|
+|contains(String str)|||
 |endsWith(String suffix)|
 |startsWith(String prefix)|
 |equals(String str)|
