@@ -6,6 +6,7 @@
 
 [2.Java.lang.String 패키지](#2String)
 
+[3.Stream API](#3Stream)
 
 
 <hr>
@@ -368,3 +369,146 @@ date2가 date1 보다 뒤의 날짜인가? true
 |String.valueOf(A)|
 |strip()|
 |trim()|
+
+<br>
+
+
+## 3.Stream
+
+<br>
+
+
+### 1. 개요
+
+Collection F/W를 통해 관리하는 데이터를 처리하기 위해 주로 사용
+
+Stream API의 다양한 기능들은 대부분 람다를 필요로 하기 때문에 람다를 이해하고 사용할 수있어야 한다.
+
+*메서드 참조(::) / 람다 필수!
+
+```java
+List<String> list = Arrays.asList("Lee", "Park", "Kim");
+
+//기존
+Iterator<String> it = list.iterator();
+while(it.hasNext()) {
+	System.out.println(it.next()};
+```
+
+```java
+List<String> list = Arrays.asList("Lee", "Park", "Kim");
+
+//Stream 활용
+list stream().forEach(name -> System.out.println(name));
+```
+
+BaseStream : Stream API의 최상위 인터페이스
+
+| 메서드 | 기능 |
+| --- | --- |
+| long count() | 해당 스트림에 포함된 항목의 수를 반환. |
+| Stream concat(Stream, Stream) | 파라미터로 전달되는  두 개의 스트림을 하나의 스트림으로 반환 |
+| R collet(Collector) | 스트림의 항목들을 컬렉션 타입의 객체로 반환 |
+| Stream filter(Predixate) | 스트림의 항목들을 파라미터의 조건에 따라 필터링하고 결과 항목들을 스트림 형태로 반환 |
+| void forEach(Consumer) | 스트림 항목들에 대한 순회(최종 연산) |
+| Optional reduce(BinaryOperator) | 람다 표현식을 기반으로 데이터를 소모하고 그 결과를 반환(최종 연산) |
+| Object[] toArray() | 스트림 항목들을 배열 객체로 반환 |
+| Stream sotred() | 스트림 항목들에 대해 정렬하고 이를 스트림으로 반환  |
+|  |  |
+
+### 2. 스트림 객체 생성 방법
+
+#### (1) Collection 객체를 통한 방법(일반적인 방법)
+
+- 이미 데이터가 모여있고, 모인 데이터를 처리할 때  사용
+
+모든 컬렉션 객체는 stream을 반환받을 수 있다. 
+
+<aside>
+✅ Collection
+ - List, Set, Queue 계열 
+Map
+
+</aside>
+
+컬렉션 인터페이스  안에 stream객체를 반환하는 메서드가 default 메서드로 정의되어 있음  → List, Set, Queue 계열의 모든 Collection 객체들이 모두 Stream을 반환할 수 있다. (Map도 마찬가지)
+
+
+```java
+List<String> list =
+		Arrays.asList("Lee", "Kim", "Park", "Song", "Choi");
+		
+Stream<String> stream = list.stream();
+```
+
+#### (2). 스트림 빌더를 통한 방식
+
+- 데이터가 존재하지 않고,  스트림 자체적으로 직접 데이터를 추가해서 사용할 때 사용
+
+| 메서드 | 기능 |
+| --- | --- |
+| void accept(T) | 스트림 빌더에 데이터 추가. |
+| Stream.Builder<T> add(T) | 스트림 빌더에 데이터를 추가하고, 스트림 반환 |
+| Stream<T> build() | 스트림 빌더에 데이터 추가를 종료하고 스트림 반환 |
+
+```java
+Stream.Builder<String> builder = Stream.builder();
+builder.accept("Kim");
+builder.accept("Lee");
+builder.accept("Song");
+builder.accept("Park");
+builder.accept("Lee");
+
+Stream<String> stream = builder.build();
+stream.forEach(System.out::println);
+```
+
+#### 한번 생성한 스트림은 사용 후 다시 사용할 수 없으며 전체 데이에 대한 처리가 이루어지면 종료된다.
+
+```java
+List<String> list =
+		Arrays.asList("Lee", "Kim", "Park", "Song", "Choi");
+		
+Stream<String> stream = list.stream(); //스트림 생성
+System.out.println(stream.count()); //stream 사용
+stream.forEach(System.out::println); //Exception 발생
+```
+
+### 3. 스트림 연산
+
+- 스트림을 이용한 연산은 각 연산의 연결을 통해 파이프라인을 구성할 수 있다.
+- 스트림을 이용한 연산 처리는 스트림 객체의 생성 - 중간 연산 - 최종 연산 단계로 구분
+
+
+#### (1) 중간 연산
+
+- filter, map과 같은 연산으로 Stream 반환
+- 중간 연산은 연속해서 호출하는 메서드 체이닝으로 구현 가능
+- 최종연산이 실행되어야 중간연산이 처리되므로 중간 연산들로만 구성된 메서드 체인은 실행되지 않는다.
+
+| 연산 | 반환 형식 | 연산 인수 |
+| --- | --- | --- |
+| filter | Stream<T> | Predicate<T> |
+| map | Stream<T> | Function<T, R> |
+| limit | Stream<T> |  |
+| sorted | Stream<T> | Comparator<T> |
+| distinct(중복 제거) | Stream<T> |  |
+| peek | Stream<T> | Consumer<T> |
+| skip | Stream<T> |  |
+
+#### (2) 최종 연산
+
+- forEach, collect와 같은 연산으로 void를 반환하거나 컬렉션 타입을 반환
+- 중간 연산을 통해 가공된 스트림은 마지막으로 최종연산을 통해 각 요소를 소모하여 결과를 출력합니다.
+- 즉, 지연(lazy)되었던 모든 중간 연산들이 최종연산시 모두 수행되는 것
+- 최종 연산 후에는 한번 생성해서 소모한 스트림은 닫히게 되고, 재사용이 불가능하다.
+
+| 연산 | 반환 식 |
+| --- | --- |
+| forEach | 스트림의 각 요소를소비하여 람다 적용, void 반환 |
+| count | 스트림 요소의 수를 반환, Long 반환 |
+| collect | List, Map 형태의 컬렉션 반환  |
+| sum | 스트림의 모든 요소에 대한 합을 반환 |
+| reduce | 스트림의 요소를 하나씩 줄여가며 연산 수행 후 결과 반환, Optional 반환  |
+
+### 스트림 연산 활용
