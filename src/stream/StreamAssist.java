@@ -3,6 +3,7 @@ package stream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StreamAssist {
     public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class StreamAssist {
         //조건 2. 오름차순 정렬,
         //조건 3. 결과를 customer 객체가 아닌 문자열 데이터로 추출
 
-        //기존 방법
+        //기존 방법-----------------------------------------
         //조건 1
         List<Customer> list = new ArrayList<>();
         for (Customer customer : customers) {
@@ -42,5 +43,19 @@ public class StreamAssist {
         for(String name : results) {
             System.out.println(name);
         }
+        //기존 End ------------------------------
+
+        System.out.println("------Stream Code------");
+        // Stream -----------------------------
+        List<String> customersNames = customers.stream()
+                .filter(customer -> customer.getAge() > 30) //중간연산 - 조건 부여
+                .sorted() //중간연산 - 정렬
+                .map(Customer::getName) //중간연산 - 타입변환(Customer 객체를 Strimg 타입으로)
+                .collect(Collectors.toList()); //최종연산 -컬렉션 List 형태로 반환
+
+        for(String name : customersNames) {
+            System.out.println(name);
+        }
+        // Stream End ---------------------------
     }
 }
