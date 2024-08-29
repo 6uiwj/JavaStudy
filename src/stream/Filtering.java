@@ -15,8 +15,8 @@ public class Filtering {
         customers.add(new Customer("Kim",33));
 
         //filter 사용 예시
-        Stream<Customer> stream = customers.stream();
-        stream.filter( customer -> customer.getAge() > 30 )
+        Stream<Customer> stream = customers.stream(); //customers 컬렉션으로부터 stream객체를 생성하여 받음
+        stream.filter( customer -> customer.getAge() > 30 ) //customer의 나이가 30 이상인 것만 필터링
                 .forEach(System.out::println);
 
         System.out.println("-----------------------");
