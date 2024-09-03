@@ -14,7 +14,7 @@ public class mapping {
         customers.add(new Customer("Choi", 19));
 
         List<String> names = customers.stream()
-                .map(Customer::getName)
+                .map(Customer::getName)     //메서드 참조
                 .collect(Collectors.toList());
         names.stream().forEach(System.out::println);
 
