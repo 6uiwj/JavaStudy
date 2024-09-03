@@ -512,3 +512,152 @@ stream.forEach(System.out::println); //Exception 발생
 | reduce | 스트림의 요소를 하나씩 줄여가며 연산 수행 후 결과 반환, Optional 반환  |
 
 ### 스트림 연산 활용
+## (1) 필터링
+
+전체 데이터에서 불필요한 데이터를 없애고 원하는 데이터를 정확히 추출하기 위한 과정
+
+filter(): 데이터 추출
+
+ distinct(): 중복제거
+
+```java
+
+public class Filtering {
+    public static void main(String[] args) {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("Kim", 33));
+        customers.add(new Customer("Park", 21));
+        customers.add(new Customer("Song", 45));
+        customers.add(new Customer("Lee", 67));
+        customers.add(new Customer("Choi", 19));
+        customers.add(new Customer("Kim",33));
+
+        //filter 사용 예시
+        Stream<Customer> stream = customers.stream(); //customers 컬렉션으로부터 stream객체를 생성하여 받음
+        stream.filter( customer -> customer.getAge() > 30 ) //customer의 나이가 30 이상인 것만 필터링
+                .forEach(System.out::println);
+
+        System.out.println("-----------------------");
+
+        //distinct 사용 예시
+        Stream<Customer> stream1 = customers.stream();
+        stream1.filter( customer -> customer.getAge() > 30)
+                .distinct()
+                .forEach(System.out::println);
+    }
+}
+```
+
+
+
+## (2) Sorted 정렬
+
+- sorted()를 이용한 정렬을위해서는 반드시 대상 객체들이 Comparable 인터페이ㅡ를 구현한 클래스, 즉 비교 가능한 객체여야 한다.
+- Comparable 객체가 아닐 경우나 역순 정렬, 혹은 다른 조건의 정렬에는 Comparator 인터페이스가 제공하는 여러 dafault, static 메서드를 이용해 정렬을 구현한다.
+
+```java
+package stream;
+
+public class Customer implements Comparable<Customer> {
+	.
+	.
+	.
+    /**
+     * 객체를 어떤 식으로 정렬할지 정의
+     * @param customer the object to be compared.
+     * @return
+     */
+    @Override
+    public int compareTo(Customer customer) {
+        if(this.age > customer.getAge()) {
+            return 1;
+        } else if( this.age == customer.getAge()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+}
+```
+
+```java
+package stream;
+
+public class Sorted {
+    public static void main(String[] args) {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("Kim", 33));
+        customers.add(new Customer("Park", 21));
+        customers.add(new Customer("Song", 45));
+        customers.add(new Customer("Lee", 67));
+        customers.add(new Customer("Choi", 19));
+
+        //나이를 기준으로 오름차순 정렬됨
+        customers.stream()
+                .sorted()
+                .forEach(System.out::println);
+
+        System.out.println("---------------------");
+
+        //비교할 조건 직접 정해서 정렬
+        customers.stream()
+                .sorted(Comparator.comparing(Customer::getName))
+                .forEach(System.out::println);
+    }
+}
+
+```
+
+## (3) 맵핑
+
+- 스트림의 매핑 연산은 스트림이 관리하는 데이터를 다른 형태의 데이터로 변환할 수 있도록 해준다.
+- 매핑 연산의 메서드는 map(), mapToInt(), mapToDouble(), mapToLong()이 잇다.
+- double, int, long 기본형 데이터 타입의 데이터를 처리하기 위한 메서드들은 매핑된 값의 결과가 기본형 데이터 타입일 경우 적용하여 사용한다.
+
+```java
+package stream;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class mapping {
+    public static void main(String[] args) {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("Kim", 33));
+        customers.add(new Customer("Park", 21));
+        customers.add(new Customer("Song", 45));
+        customers.add(new Customer("Lee", 67));
+        customers.add(new Customer("Choi", 19));
+
+        List<String> names = customers.stream()
+                .map(Customer::getName)
+                .collect(Collectors.toList());
+        names.stream().forEach(System.out::println);
+
+        customers.stream()
+                .map(Customer::getName)
+                .forEach(System.out::println);
+    }
+}
+
+```
+
+## (4)최종연산
+
+- 최종 연산: forEach() 메서드 이용
+- collect() 메서드는 스트림 처리 이후 처리된 데이터에 대해 Collection 객체로 반환하는 메서드
+    - collect(Collectors.toList());
+    - collect(Collectors.toSet());
+    - collect(Collectors.toMap());
+- 스트림의 최종 연산은 forEach()와 같은 스트림 처리 결과를 바로 확인할 수 있는 연산이 있고, 데이터를 모두 소모한 후에 그 결과를 알 수 있는 count()와 같은 연산이 있다.
+
+| 연산 | 반환 형식 |
+| --- | --- |
+| allMatch | 파라미터로 전달되는 람다식 기준으로 스트림 데이터가 모두 일치하는지 확인  |
+| anyMatch | 파라미터로 전달되는 람다식 기준으로 스트림 데이터가 하나라도 일치하는지 확인 |
+| noneMatch | 파라미터로 전달되는 람다식 기준으로 스트림 데이터가 모두 일치하지 않는지를 확인 |
+| findFirst | 스트림 데이터 중에서 가장 첫번째 데이터를 반환 |
+| reduce | 스트림 데이터 중에서 임의의 데이터를 반환  |
+
+참고 문헌 : https://www.youtube.com/watch?v=7cVPlgyx3d8
