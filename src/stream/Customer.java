@@ -50,6 +50,11 @@ public class Customer implements Comparable<Customer> {
         return name.hashCode();
     }
 
+    /**
+     * 객체를 어떤 식으로 정렬할지 정의
+     * @param customer the object to be compared.
+     * @return
+     */
     @Override
     public int compareTo(Customer customer) {
         if(this.age > customer.getAge()) {
