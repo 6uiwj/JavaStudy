@@ -18,5 +18,7 @@ public class temp {
         int t = swap(k,j);
 
         System.out.println(t);
+
+        System.out.println(3+5);
     }
 }
